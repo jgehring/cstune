@@ -1,0 +1,71 @@
+/*
+ * 	csTune - A simple command line audio player
+ * 	CopyLeft 2007 by Jonas Gehring
+ */
+
+
+#ifndef _PLAYER_H
+#define _PLAYER_H
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <string.h>
+#include <dirent.h>
+#include <stddef.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#include <xine.h>
+#include <xine/xineutils.h>
+
+#include "interface.h"
+
+
+enum error_codes
+{
+	NO_FILES_FOUND = 1,
+	CANNOT_OPEN_STREAM,
+	CANNOT_PLAY_FILE
+};
+
+
+class player
+{
+	public:
+		player();
+		~player();
+
+		bool			initialized();
+		bool			playing();
+		bool			stream_open();
+
+		int			play(const char *path);
+		int			start();
+		void			stop();
+/*		void			next_song();
+		void			stop();
+		void			start();
+		void			pause();
+		void			resume();
+		void			toggle_pause();
+*/
+	private:
+		void			enqueue_dir(const char *path);
+		void			enqueue_loc(const char *path);
+		int			init_xine();
+		static void		xine_event_listener(void *user_data, const xine_event_t *event);
+
+		std::vector<std::string>	playlist;
+		bool			playing_st, open_st, init_st;
+		int			current_track;
+		xine_t			*xine_engine;
+		xine_stream_t		*xine_stream;
+		xine_audio_port_t	*xine_port;
+		xine_event_queue_t	*xine_queue;
+};
+
+
+#endif
+
