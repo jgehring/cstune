@@ -8,6 +8,7 @@
 #define _INTERFACE_H
 
 
+#include "csTune.h"
 #include "player.h"
 
 

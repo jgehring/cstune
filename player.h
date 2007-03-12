@@ -20,6 +20,7 @@
 #include <xine.h>
 #include <xine/xineutils.h>
 
+#include "csTune.h"
 #include "interface.h"
 
 
@@ -44,14 +45,12 @@ class player
 		int			play(const char *path);
 		int			start();
 		void			stop();
-/*		void			next_song();
-		void			stop();
-		void			start();
+		void			toggle_pause();
+		void			next_song();
+
+	private:
 		void			pause();
 		void			resume();
-		void			toggle_pause();
-*/
-	private:
 		void			enqueue_dir(const char *path);
 		void			enqueue_loc(const char *path);
 		int			init_xine();

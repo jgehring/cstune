@@ -4,8 +4,6 @@
  */
 
 
-#include <iostream>
-
 #include "player.h"
 
 
@@ -82,20 +80,18 @@ int player::play(const char *path)
 		cout << "Sorry, URLS are not supported atm" << endl;
 	}
 
-	if (open_st)
-	{
-		stop();
-	}
+	stop();
 
 	if (playlist.empty())
 	{
+		cout << "Sorry, no media was found at \"" << path << "\"" << endl;
 		return NO_FILES_FOUND;
 	}
 
-	if (!xine_open(xine_stream, playlist[current_track].c_str()))
-	{
-		return CANNOT_OPEN_STREAM;
-	}
+	XTERM_GREEN;
+	cout << ">> Added " << playlist.size() << " track";
+	cout << (playlist.size() > 1 ? "s " : " ") << "to playlist" << endl; 
+	XTERM_WHITE;
 
 	playing_st = false;
 	return start();
@@ -105,18 +101,28 @@ int player::play(const char *path)
 // Starts playing 
 int player::start()
 {
-	if (open_st)
+	stop();
+
+	if (!xine_open(xine_stream, playlist[current_track].c_str()))
 	{
-		stop();
+		XTERM_RED;
+		cout << ">> ERRR opening " << playlist[current_track] << endl;
+		XTERM_WHITE;
+		return CANNOT_OPEN_STREAM;
 	}
 
 	if (!xine_play(xine_stream, 0, 0))
 	{
+		XTERM_RED;
+		cout << ">> ERROR playing " << playlist[current_track] << endl;
+		XTERM_WHITE;
 		return CANNOT_PLAY_FILE;
 	}
 
 	playing_st = open_st = true;
+	XTERM_GREEN;
 	cout << ">> Now playing: " << playlist[current_track] << endl;
+	XTERM_WHITE;
 	return 0;
 }
 
@@ -128,6 +134,49 @@ void player::stop()
 	{
 		xine_close(xine_stream);
 		playing_st = open_st = false;
+	}
+}
+
+
+// Toggles pause
+void player::toggle_pause()
+{
+	if (open_st == false)
+	{
+		cout << "No stream to pause. Please use 'start' first" << endl;
+		return;
+	}
+	playing_st ? pause() : resume();
+}
+
+
+// Plays the next song
+void player::next_song()
+{
+	stop();
+	current_track = ++current_track % playlist.size();
+	start();
+}
+
+
+// Pause playing
+void player::pause()
+{
+	if (open_st)
+	{
+		xine_set_param(xine_stream, XINE_PARAM_SPEED, XINE_SPEED_PAUSE);
+		playing_st = false;
+	}
+}
+
+
+// Resume playing
+void player::resume()
+{
+	if (open_st)
+	{
+		xine_set_param(xine_stream, XINE_PARAM_SPEED, XINE_SPEED_NORMAL);
+		playing_st = true;
 	}
 }
 
@@ -200,6 +249,7 @@ void player::xine_event_listener(void *user_data, const xine_event_t *event)
 	switch (event->type)
 	{
 		case XINE_EVENT_UI_PLAYBACK_FINISHED:
+			instance->next_song();
 			break;
 
 		default:

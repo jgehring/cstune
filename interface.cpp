@@ -35,6 +35,7 @@ interface::~interface()
 // Main loop
 void interface::loop()
 {
+	XTERM_WHITE;
 	char *cmd = new char[CMD_SIZE + 1];
 
 	do
@@ -67,6 +68,26 @@ void interface::interpret_exec(char *cmd)
 		else
 			cout << "No location specified. See 'help play' for details" << endl;	
 	}
+	else if (!strcmp(cmd, "start") || !strcmp(cmd, "st"))
+	{
+		p->start();
+	}
+	else if (!strcmp(cmd, "stop") || !strcmp(cmd, "s"))
+	{
+		p->stop();
+	}
+	else if (!strcmp(cmd, "pause") || !strcmp(cmd, "ps"))
+	{
+		p->toggle_pause();
+	}
+	else if (!strcmp(cmd, "next") || !strcmp(cmd, "n"))
+	{
+		p->next_song();
+	}
+	else if (strcmp(cmd, "quit") && strcmp(cmd,"q"))
+	{
+		cout << "Unkown command. Enter 'help' for a list of available commands" << endl;
+	}
 }
 
 
@@ -93,7 +114,8 @@ void interface::print_help(char *topic)
 	else
 	{
 		cout << "Available commands (shortcuts):\n";
-		cout << "\tplay\t(p)\n\tstart\t(st)\n\tstop\t(s)\n\tpause\t(ps)\n\tquit\t(q)\n\thelp\t(h)\n";
+		cout << "\tplay\t(p)\n\tstart\t(st)\n\tstop\t(s)\n\tpause\t(ps)\n";
+		cout << "\tnext\t(n)\n\tquit\t(q)\n\thelp\t(h)\n";
 		cout << "Type 'help <command>' for specific help\n";
 	}
 
