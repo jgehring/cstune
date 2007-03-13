@@ -18,7 +18,6 @@ using namespace std;
 int main(int argc, char **argv)
 {
 	// TODO: Parse command line arguments, output help etc.
-
 	player *p = new player();
 	interface *i = new interface(p);
 

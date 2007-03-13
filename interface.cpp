@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <readline/readline.h>
+
 #include "interface.h"
 
 
@@ -40,8 +42,17 @@ void interface::loop()
 
 	do
 	{
-		cout << "> ";
-		cin.getline(cmd, CMD_SIZE);
+		cmd[0] = 0x00;
+		char *c = readline("> ");
+		
+		if (!(c) && !(*c))
+		{
+			cout << endl;	
+			continue;
+		}
+
+		strcpy(cmd, c);
+
 		interpret_exec(cmd);
 	}
 	while (strcmp(cmd, "q") && strcmp(cmd, "quit"));
@@ -54,12 +65,16 @@ void interface::loop()
 void interface::interpret_exec(char *cmd)
 {
 	char* sep_pos = strchr(cmd, ' ');
-	if (!strncmp(cmd, "help", 4) || !strncmp(cmd, "h", 1))
+	if (!strcmp(cmd, "help") || !strncmp(cmd, "help ", 5) !strcmp(cmd, "h") || !strncmp(cmd, "h ", 2))
 	{
 		if (sep_pos && strlen(sep_pos))
 			print_help(++sep_pos);
 		else
 			print_help();
+	}
+	else if (!strcmp(cmd, "pause") || !strcmp(cmd, "ps"))
+	{
+		p->toggle_pause();
 	}
 	else if (!strncmp(cmd, "play", 4) || !strncmp(cmd, "p", 1))
 	{
@@ -76,17 +91,17 @@ void interface::interpret_exec(char *cmd)
 	{
 		p->stop();
 	}
-	else if (!strcmp(cmd, "pause") || !strcmp(cmd, "ps"))
-	{
-		p->toggle_pause();
-	}
 	else if (!strcmp(cmd, "next") || !strcmp(cmd, "n"))
 	{
 		p->next_song();
 	}
-	else if (strcmp(cmd, "quit") && strcmp(cmd,"q"))
+	else if (!strcmp(cmd, "showpl") || !strcmp(cmd, "sp"))
 	{
-		cout << "Unkown command. Enter 'help' for a list of available commands" << endl;
+		p->show_playlist();
+	}
+	else if (strcmp(cmd, "quit") && strcmp(cmd,"q") && strlen(cmd))
+	{
+		cout << "Unkown command '" << cmd << "'. Enter 'help' for a list of available commands" << endl;
 	}
 }
 
@@ -115,7 +130,7 @@ void interface::print_help(char *topic)
 	{
 		cout << "Available commands (shortcuts):\n";
 		cout << "\tplay\t(p)\n\tstart\t(st)\n\tstop\t(s)\n\tpause\t(ps)\n";
-		cout << "\tnext\t(n)\n\tquit\t(q)\n\thelp\t(h)\n";
+		cout << "\tnext\t(n)\n\tshowpl\t(sp)\n\tquit\t(q)\n\thelp\t(h)\n";
 		cout << "Type 'help <command>' for specific help\n";
 	}
 

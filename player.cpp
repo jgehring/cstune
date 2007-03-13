@@ -4,6 +4,14 @@
  */
 
 
+#include <iostream>
+#include <fstream>
+#include <string.h>
+#include <dirent.h>
+#include <stddef.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
 #include "player.h"
 
 
@@ -58,11 +66,19 @@ bool player::stream_open()
 
 
 // Plays the song at a given location
-int player::play(const char *path)
+int player::play(char *path)
 {
 	// Clear playlist
 	playlist.clear();
 	current_track = 0;
+
+	// Strip whitespaces at the end of the path
+	char *ptr = path + strlen(path) - 1;
+	while (*ptr == ' ')
+	{
+		*ptr = 0x00;
+		ptr--;
+	}
 
 	// Enqueue path
 	struct stat st;
@@ -143,7 +159,7 @@ void player::toggle_pause()
 {
 	if (open_st == false)
 	{
-		cout << "No stream to pause. Please use 'start' first" << endl;
+		cout << ">> No stream to pause. Please use 'start' first" << endl;
 		return;
 	}
 	playing_st ? pause() : resume();
@@ -156,6 +172,44 @@ void player::next_song()
 	stop();
 	current_track = ++current_track % playlist.size();
 	start();
+}
+
+
+// Opens less to show the current playlist
+void player::show_playlist()
+{
+	// Check for length of playlist
+	if (playlist.size() == 0)
+	{
+		cout << "No elements in playlist" << endl;
+		return;
+	}
+
+	// Write current playlist to temporary file
+	ofstream out;
+	char temp[2048];
+	sprintf(temp, "%s%s", xine_get_homedir(), "/.cst_playlist");
+	
+	out.open(temp);
+	if (out.good() == false)
+	{
+		XTERM_RED;
+		cout << ">> ERROR: Unable to write to temporary playlist file" << endl;
+		XTERM_WHITE
+		return;
+	}
+
+	for (int i = 0; i < playlist.size(); i++)
+	{
+		out << playlist[i] << endl;
+	}
+
+	out.close();
+	char cmd[2048+5];
+	strcpy(cmd, "less ");
+	strcat(cmd, temp);
+	system(cmd);
+	unlink(temp);
 }
 
 
@@ -249,7 +303,9 @@ void player::xine_event_listener(void *user_data, const xine_event_t *event)
 	switch (event->type)
 	{
 		case XINE_EVENT_UI_PLAYBACK_FINISHED:
+			cout << endl;
 			instance->next_song();
+			cout << "> " << flush;
 			break;
 
 		default:

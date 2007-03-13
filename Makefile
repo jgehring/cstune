@@ -1,7 +1,7 @@
 # Makefile for csTune
 
 csTune: main.o interface.o player.o
-	gcc -o csTune main.o interface.o player.o -lstdc++ -lxine
+	gcc -o csTune main.o interface.o player.o -lstdc++ -lxine -lreadline
 
 main.o: main.cpp interface.h player.h
 	gcc -c -o main.o -I. main.cpp

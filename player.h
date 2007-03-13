@@ -8,14 +8,8 @@
 #define _PLAYER_H
 
 
-#include <iostream>
 #include <string>
 #include <vector>
-#include <string.h>
-#include <dirent.h>
-#include <stddef.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 #include <xine.h>
 #include <xine/xineutils.h>
@@ -42,11 +36,12 @@ class player
 		bool			playing();
 		bool			stream_open();
 
-		int			play(const char *path);
+		int			play(char *path);
 		int			start();
 		void			stop();
 		void			toggle_pause();
 		void			next_song();
+		void			show_playlist();
 
 	private:
 		void			pause();
