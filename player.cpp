@@ -21,7 +21,7 @@ using namespace std;
 // Constructor
 player::player()
 {
-	playing_st = open_st = init_st = false;
+	playing_st = open_st = init_st = random_st = false;
 	current_track = 0;
 
 	xine_engine = NULL;
@@ -62,6 +62,10 @@ bool player::playing()
 bool player::stream_open()
 {
 	return open_st;
+}
+bool player::random()
+{
+	return random_st;
 }
 
 
@@ -169,8 +173,19 @@ void player::toggle_pause()
 // Plays the next song
 void player::next_song(int n)
 {
+	if (n < 1) n = 1;
 	stop();
-	current_track = (current_track+n) % playlist.size();
+	if (random_st == false)
+	{
+		current_track = (current_track+n) % playlist.size();
+	}
+	else
+	{
+		for (int i = 0; i < n; i++)
+		{
+			current_track = rand() % playlist.size();
+		}
+	}
 	start();
 }
 
@@ -210,6 +225,33 @@ void player::show_playlist()
 	strcat(cmd, temp);
 	system(cmd);
 	unlink(temp);
+}
+
+
+// Jumps to the first song that matches string
+void player::jump(char *string)
+{
+	int ctrack_sav = current_track;
+	for (unsigned int i = 0; i < playlist.size(); i++)
+	{
+		current_track = ++current_track % playlist.size();
+		if (strstr(playlist[current_track].c_str(), string))
+		{
+			stop();
+			start();
+			return;
+		}
+	}
+	current_track = ctrack_sav;
+
+	cout << "Sorry, " << string << " does not occur in the current playlist" << endl;
+}
+
+
+// Sets random mode
+void player::set_random(bool rand)
+{
+	random_st = rand;
 }
 
 

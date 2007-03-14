@@ -27,6 +27,7 @@ class interface
 		void		loop();
 
 	private:
+		void		toggle_random(char *onoff);
 		bool		check_cmd(char *cmd, const char *check, const char *sc, bool args = false);
 		void		interpret_exec(char *cmd);
 		void		print_help(char *topic = " ");

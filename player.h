@@ -35,6 +35,7 @@ class player
 		bool			initialized();
 		bool			playing();
 		bool			stream_open();
+		bool			random();
 
 		int			play(char *path);
 		int			start();
@@ -42,6 +43,8 @@ class player
 		void			toggle_pause();
 		void			next_song(int n = 1);
 		void			show_playlist();
+		void			jump(char *string);
+		void			set_random(bool rand);
 
 	private:
 		void			pause();
@@ -52,7 +55,7 @@ class player
 		static void		xine_event_listener(void *user_data, const xine_event_t *event);
 
 		std::vector<std::string>	playlist;
-		bool			playing_st, open_st, init_st;
+		bool			playing_st, open_st, init_st, random_st;
 		int			current_track;
 		xine_t			*xine_engine;
 		xine_stream_t		*xine_stream;

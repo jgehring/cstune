@@ -61,6 +61,32 @@ void interface::loop()
 }
 
 
+// Toggles random mode or displays current mode
+void interface::toggle_random(char *onoff)
+{
+	if (onoff && strlen(onoff))
+	{
+		++onoff;
+		if (!strcmp(onoff, "on"))
+		{
+			p->set_random(true);
+		}
+		else if (!strcmp(onoff, "off"))
+		{
+			p->set_random(false);
+		}
+		else
+		{
+			cout << "Please specifiy either 'on' or 'off'. See 'help rand' for details" << endl;
+		}
+	}
+	else
+	{
+		cout << "Random mode is " << (p->random() ? "on" : "off") << endl;
+	}
+}
+
+
 // Checks for a command
 bool interface::check_cmd(char *cmd, const char *check, const char *sc, bool args)
 {
@@ -110,13 +136,27 @@ void interface::interpret_exec(char *cmd)
 	{
 		p->stop();
 	}
-	else if (check_cmd(cmd, "next", "n"))
+	else if (check_cmd(cmd, "next", "n", true))
 	{
-		p->next_song(atoi(sep_pos));
+		if (sep_pos && strlen(sep_pos))
+			p->next_song(atoi(++sep_pos));
+		else
+			p->next_song();
 	}
 	else if (check_cmd(cmd, "showpl", "sp"))
 	{
 		p->show_playlist();
+	}
+	else if (check_cmd(cmd, "jump", "j", true))
+	{
+		if (sep_pos && strlen(sep_pos))
+			p->jump(++sep_pos);
+		else
+			cout << "No search string specified. See 'help jump' for details" << endl;
+	}
+	else if (check_cmd(cmd, "rand", "r", true))
+	{
+		toggle_random(sep_pos);
 	}
 	else if (!check_cmd(cmd, "quit", "q") && strlen(cmd))
 	{
@@ -160,11 +200,26 @@ void interface::print_help(char *topic)
 		cout << "less inside the terminal to display the playlist.\n";
 		cout << "If you want to edit the playlist, use 'edit'\n";
 	}
+	else if (check_cmd(topic, "jump", "j"))
+	{
+		cout << "\tjump <string>\n";
+		cout << "\tJumps to track that matches a given string\n\n";
+		cout << "csTune starts search at the current track and searches the playlist\n";
+		cout << "for 'string'. If the search has been successfull, it starts playing\n";
+		cout << "the first track it has found.\nRegular Expressions are not implemented yet\n";
+	}
+	else if (check_cmd(topic, "rand", "r"))
+	{
+		cout << "\trand [on|off]\n";
+		cout << "\tTurn on/off random or show current status\n\n";
+		cout << "If arguments are omitted, 'rand' shows the current state of the\n";
+		cout << "random switch. Use 'on' or 'off' to turn it on or off\n";
+	}
 	else
 	{
 		cout << "Available commands (shortcuts):\n";
 		cout << "\tplay\t(p)\n\tstart\t(st)\n\tstop\t(s)\n\tpause\t(ps)\n";
-		cout << "\tnext\t(n)\n\tshowpl\t(sp)\n\tquit\t(q)\n\thelp\t(h)\n";
+		cout << "\tnext\t(n)\n\tjump (j)\n\tshowpl\t(sp)\n\trand (r)\n\tquit\t(q)\n\thelp\t(h)\n";
 		cout << "Type 'help <command>' for specific help\n";
 	}
 
