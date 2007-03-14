@@ -40,7 +40,7 @@ class player
 		int			start();
 		void			stop();
 		void			toggle_pause();
-		void			next_song();
+		void			next_song(int n = 1);
 		void			show_playlist();
 
 	private:

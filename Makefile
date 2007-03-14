@@ -30,7 +30,7 @@ mainosx.o: main.cpp interface.h player.h
 interfaceosx.o: interface.cpp interface.h player.h
 	gcc -c $(CXX_FLAGS) -o interface.o $(INCLUDE_PATH_OSX) interface.cpp
 playerosx.o: player.cpp player.h interface.h
-	gcc -c $(CXX_FLAGS) -o player.o $(INCLUDE_PATH_OSX) player.cpp
+	gcc -c $(CXX_FLAGS) -o player.o $(DEFINES_OSX) $(INCLUDE_PATH_OSX) player.cpp
 
 clean:
 	rm *.o csTune

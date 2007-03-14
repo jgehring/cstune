@@ -167,10 +167,10 @@ void player::toggle_pause()
 
 
 // Plays the next song
-void player::next_song()
+void player::next_song(int n)
 {
 	stop();
-	current_track = ++current_track % playlist.size();
+	current_track = (current_track+n) % playlist.size();
 	start();
 }
 
@@ -285,7 +285,7 @@ void player::init_xine()
 	xine_config_load(xine_engine, configfile);
 	xine_init(xine_engine);
 
-#ifdef __OSX__
+#ifdef _OSX_
 	xine_port = xine_open_audio_driver(xine_engine, "esd", NULL);
 #else
 	xine_port = xine_open_audio_driver(xine_engine, "auto", NULL);
