@@ -48,7 +48,7 @@ class player
 		void			resume();
 		void			enqueue_dir(const char *path);
 		void			enqueue_loc(const char *path);
-		int			init_xine();
+		void			init_xine();
 		static void		xine_event_listener(void *user_data, const xine_event_t *event);
 
 		std::vector<std::string>	playlist;

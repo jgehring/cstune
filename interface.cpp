@@ -65,7 +65,7 @@ void interface::loop()
 void interface::interpret_exec(char *cmd)
 {
 	char* sep_pos = strchr(cmd, ' ');
-	if (!strcmp(cmd, "help") || !strncmp(cmd, "help ", 5) !strcmp(cmd, "h") || !strncmp(cmd, "h ", 2))
+	if (!strcmp(cmd, "help") || !strncmp(cmd, "help ", 5)  || !strcmp(cmd, "h") || !strncmp(cmd, "h ", 2))
 	{
 		if (sep_pos && strlen(sep_pos))
 			print_help(++sep_pos);

@@ -199,7 +199,7 @@ void player::show_playlist()
 		return;
 	}
 
-	for (int i = 0; i < playlist.size(); i++)
+	for (unsigned int i = 0; i < playlist.size(); i++)
 	{
 		out << playlist[i] << endl;
 	}
@@ -245,7 +245,7 @@ void player::enqueue_dir(const char *path)
 	if (dir != NULL)
 	{
 		char filename[4096];
-		while (entry = readdir(dir))
+		while ((entry = readdir(dir)))
 		{
 			if (strncmp(entry->d_name, ".", 1) && strcmp(entry->d_name, ".."))
 			{
@@ -276,7 +276,7 @@ void player::enqueue_loc(const char *path)
 
 
 // Initializes the xine engine
-int player::init_xine()
+void player::init_xine()
 {
 	char configfile[4096];
 
@@ -285,7 +285,11 @@ int player::init_xine()
 	xine_config_load(xine_engine, configfile);
 	xine_init(xine_engine);
 
+#ifdef __OSX__
+	xine_port = xine_open_audio_driver(xine_engine, "esd", NULL);
+#else
 	xine_port = xine_open_audio_driver(xine_engine, "auto", NULL);
+#endif
 	xine_stream = xine_stream_new(xine_engine, xine_port, NULL);
 	xine_queue = xine_event_new_queue(xine_stream);
 

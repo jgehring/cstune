@@ -1,0 +1,5 @@
+Build instructions:
+
+On linux:	make
+On Mac OSX:	make csTune.osx
+
