@@ -152,7 +152,14 @@ void interface::interpret_exec(char *cmd)
 		if (sep_pos && strlen(sep_pos))
 			p->jump(++sep_pos);
 		else
-			cout << "No search string specified. See 'help jump' for details" << endl;
+			cout << "No regular expression specified. See 'help jump' for details" << endl;
+	}
+	else if (check_cmd(cmd, "filter", "fl", true))
+	{
+		if (sep_pos && strlen(sep_pos))
+			p->filter(++sep_pos);
+		else
+			cout << "No regular expression speficied. See 'help filter' for details" << endl;
 	}
 	else if (check_cmd(cmd, "rand", "r", true))
 	{
@@ -202,11 +209,19 @@ void interface::print_help(char *topic)
 	}
 	else if (check_cmd(topic, "jump", "j"))
 	{
-		cout << "\tjump <string>\n";
-		cout << "\tJumps to track that matches a given string\n\n";
-		cout << "csTune starts search at the current track and searches the playlist\n";
-		cout << "for 'string'. If the search has been successfull, it starts playing\n";
-		cout << "the first track it has found.\nRegular Expressions are not implemented yet\n";
+		cout << "\tjump <regexp>\n";
+		cout << "\tJumps to track that matches a given regular expression\n\n";
+		cout << "csTune starts searching at the current track and searches the playlist\n";
+		cout << "for the given regular expression. If the search has been successfull,\n";
+		cout << "it starts playing the first track it has found.\n";
+	}
+	else if (check_cmd(topic, "filter", "fl"))
+	{
+		cout << "\tfilter <regexp>\n";
+		cout << "\tFilters the playlist with a regular expression\n\n";
+		cout << "After filtering, the playlist will only contain the tracks that\n";
+		cout << "were matching the given regular expression.\n";
+		cout << "If no tracks are matching the regex, no filter will be applied.\n";
 	}
 	else if (check_cmd(topic, "rand", "r"))
 	{
@@ -219,7 +234,7 @@ void interface::print_help(char *topic)
 	{
 		cout << "Available commands (shortcuts):\n";
 		cout << "\tplay\t(p)\n\tstart\t(st)\n\tstop\t(s)\n\tpause\t(ps)\n";
-		cout << "\tnext\t(n)\n\tjump (j)\n\tshowpl\t(sp)\n\trand (r)\n\tquit\t(q)\n\thelp\t(h)\n";
+		cout << "\tnext\t(n)\n\tjump (j)\n\tshowpl\t(sp)\n\trand\t(r)\n\tfilter\t(fl)\n\tquit\t(q)\n\thelp\t(h)\n";
 		cout << "Type 'help <command>' for specific help\n";
 	}
 

@@ -44,6 +44,7 @@ class player
 		void			next_song(int n = 1);
 		void			show_playlist();
 		void			jump(char *string);
+		void			filter(char *string);
 		void			set_random(bool rand);
 
 	private:

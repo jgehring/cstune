@@ -12,6 +12,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include <regex.h>
+
 #include "player.h"
 
 
@@ -231,18 +233,55 @@ void player::show_playlist()
 // Jumps to the first song that matches string
 void player::jump(char *string)
 {
-	int ctrack_sav = current_track;
+	regex_t regex;
+	if (regcomp(&regex, string, REG_ICASE | REG_NOSUB))
+	{
+		cout << "ERROR: Invalid regular expression." << endl;
+		return;
+	}
 	for (unsigned int i = 0; i < playlist.size(); i++)
 	{
 		current_track = ++current_track % playlist.size();
-		if (strstr(playlist[current_track].c_str(), string))
+		if (regexec(&regex, playlist[current_track].c_str(), 0, NULL, 0) == 0)
 		{
 			stop();
 			start();
+			regfree(&regex);
 			return;
 		}
 	}
-	current_track = ctrack_sav;
+	regfree(&regex);
+
+	cout << "Sorry, " << string << " does not occur in the current playlist" << endl;
+}
+
+
+// Filters the playlist
+void player::filter(char *string)
+{
+	regex_t regex;
+	if (regcomp(&regex, string, REG_ICASE | REG_NOSUB))
+	{
+		cout << "ERROR: Invalid regular expression." << endl;
+		return;
+	}
+	std::vector<std::string> new_list;
+	for (unsigned int i = 0; i < playlist.size(); i++)
+	{
+		if (regexec(&regex, playlist[i].c_str(), 0, NULL, 0) == 0)
+		{
+			new_list.push_back(playlist[i]);
+		}
+	}
+	regfree(&regex);
+
+	if (new_list.size())
+	{
+		current_track = -1;	// FIXME: Repeat? Previous track?
+		cout << "Filtered " << new_list.size() << " of " << playlist.size() << " tracks" << endl;
+		playlist = new_list;
+		return;
+	}
 
 	cout << "Sorry, " << string << " does not occur in the current playlist" << endl;
 }
