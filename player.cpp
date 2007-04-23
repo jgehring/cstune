@@ -185,7 +185,7 @@ void player::next_song(int n)
 	{
 		for (int i = 0; i < n; i++)
 		{
-			current_track = rand() % playlist.size();
+			current_track = (rand() * clock()) % playlist.size();
 		}
 	}
 	start();
