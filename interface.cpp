@@ -233,8 +233,8 @@ void interface::print_help(char *topic)
 	else
 	{
 		cout << "Available commands (shortcuts):\n";
-		cout << "\tplay\t(p)\n\tstart\t(st)\n\tstop\t(s)\n\tpause\t(ps)\n";
-		cout << "\tnext\t(n)\n\tjump (j)\n\tshowpl\t(sp)\n\trand\t(r)\n\tfilter\t(fl)\n\tquit\t(q)\n\thelp\t(h)\n";
+		cout << "\tplay\t(p)\n\tstart\t(s)\n\tstop\t(st)\n\tpause\t(ps)\n";
+		cout << "\tnext\t(n)\n\tjump\t(j)\n\tshowpl\t(sp)\n\trand\t(r)\n\tfilter\t(fl)\n\tquit\t(q)\n\thelp\t(h)\n";
 		cout << "Type 'help <command>' for specific help\n";
 	}
 

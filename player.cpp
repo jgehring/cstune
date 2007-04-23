@@ -125,10 +125,16 @@ int player::start()
 {
 	stop();
 
+	if (playlist.size() == 0)
+	{
+		cout << "No media in playlist" << endl;
+		return PLAYLIST_EMPTY;
+	}
+
 	if (!xine_open(xine_stream, playlist[current_track].c_str()))
 	{
 		XTERM_RED;
-		cout << ">> ERRR opening " << playlist[current_track] << endl;
+		cout << ">> ERROR opening " << playlist[current_track] << endl;
 		XTERM_WHITE;
 		return CANNOT_OPEN_STREAM;
 	}
