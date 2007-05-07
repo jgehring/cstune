@@ -139,6 +139,8 @@ int player::start()
 		return CANNOT_OPEN_STREAM;
 	}
 
+	open_st = true;
+
 	if (!xine_play(xine_stream, 0, 0))
 	{
 		XTERM_RED;
@@ -147,7 +149,7 @@ int player::start()
 		return CANNOT_PLAY_FILE;
 	}
 
-	playing_st = open_st = true;
+	playing_st = true;
 	XTERM_GREEN;
 	cout << ">> Now playing: " << playlist[current_track] << endl;
 	XTERM_WHITE;
