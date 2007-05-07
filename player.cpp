@@ -180,10 +180,10 @@ void player::toggle_pause()
 }
 
 
-// Plays the next song
+// Plays the nth next song
 void player::next_song(int n)
 {
-	if (n < 1) n = 1;
+	if (n == 0)	return;
 	stop();
 	if (random_st == false)
 	{
@@ -191,6 +191,8 @@ void player::next_song(int n)
 	}
 	else
 	{
+		// TODO: History for random mode
+		n = abs(n);
 		for (int i = 0; i < n; i++)
 		{
 			current_track = (rand() * clock()) % playlist.size();

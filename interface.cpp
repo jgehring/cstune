@@ -195,9 +195,11 @@ void interface::print_help(char *topic)
 	else if (check_cmd(topic, "next", "n"))
 	{
 		cout << "\tnext [num]\n";
-		cout << "\tJumps n tracks forward\n\n";
+		cout << "\tJumps n tracks forward/backward\n\n";
 		cout << "If the 'num' argument is not given, it will be interpreted as\n";
 		cout << "'1' (i.e. the next song in the playlist will be played)\n";
+		cout << "If 'num' is < 0, csTune will jump backwards, i.e. '-1' for the\n";
+		cout << "previous track\n";
 	}
 	else if (check_cmd(topic, "showpl", "sp"))
 	{
