@@ -47,6 +47,8 @@ class player
 		void			jump(char *string);
 		void			filter(char *string);
 		void			set_random(bool rand);
+		void			set_volume(int volume);
+		int 			get_volume();
 
 	private:
 		void			pause();

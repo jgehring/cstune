@@ -304,6 +304,45 @@ void player::set_random(bool rand)
 }
 
 
+// Sets the volume
+void player::set_volume(int vol)
+{
+	if (!init_st)
+	{
+		return;
+	}
+
+	if (vol > 100)
+	{
+		vol = 100; 
+	}
+	else if (vol < 0)
+	{
+		vol = 0;
+	}
+
+	xine_set_param(xine_stream, XINE_PARAM_AUDIO_VOLUME, vol);
+//	xine_set_param(xine_stream, XINE_PARAM_AUDIO_AMP_LEVEL, vol);
+
+/*	if (software_mixer)
+ *	{
+ *		if (volume_gain)
+ *			xine_set_param(xine_stream, XINE_PARAM_AUDIO_AMO_LEVEL, vol*2);
+ *		else
+ *			xine_set_param(xine_stream, XINE_PARAM_AUDIO_AMO_LEVEL, vol);
+ *	}
+ */
+}
+
+
+// Gets the volume
+int player::get_volume()
+{
+	return xine_get_param(xine_stream, XINE_PARAM_AUDIO_VOLUME);
+//	return xine_get_param(xine_stream, XINE_PARAM_AUDIO_AMP_LEVEL);
+}
+
+
 // Pause playing
 void player::pause()
 {
@@ -407,5 +446,4 @@ void player::xine_event_listener(void *user_data, const xine_event_t *event)
 			break;
 	}
 }
-
 

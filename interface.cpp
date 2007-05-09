@@ -165,6 +165,31 @@ void interface::interpret_exec(char *cmd)
 	{
 		toggle_random(sep_pos);
 	}
+	else if (check_cmd(cmd, "vol", "v", true))
+	{
+		if (sep_pos && strlen(sep_pos) && (*(sep_pos+1) == '+' || *(sep_pos+1) == '-')) 
+		{
+			sep_pos++;
+			if (!strlen(sep_pos))
+				return;
+
+			if (*sep_pos == '+')
+			{
+				p->set_volume(p->get_volume() + atoi(++sep_pos));
+			}
+			else if (*sep_pos == '-')
+			{
+				p->set_volume(p->get_volume() - atoi(++sep_pos));
+			}
+		}
+		else
+		{
+			if (!sep_pos || !strlen(sep_pos))
+				return;
+			p->set_volume((atoi(++sep_pos)));
+		}
+		cout << "Volume set to " << p->get_volume() << "%" << endl;
+	}
 	else if (!check_cmd(cmd, "quit", "q") && strlen(cmd))
 	{
 		cout << "Unkown command '" << cmd << "'. Enter 'help' for a list of available commands" << endl;
@@ -232,11 +257,21 @@ void interface::print_help(char *topic)
 		cout << "If arguments are omitted, 'rand' shows the current state of the\n";
 		cout << "random switch. Use 'on' or 'off' to turn it on or off\n";
 	}
+	else if (check_cmd(topic, "vol", "v"))
+	{
+		cout << "\tvol <+->[n]\n";
+		cout << "\tControl output volume\n\n";
+		cout << "n is interpreted as 'n percent'. If +n is given, it the volume will\n";
+		cout << "increased by n percent, if -n is given, it will be decreased by b\n";
+		cout << "percent.\n";
+		cout << "If only n is given, the volume will be set to n percent\n";
+	}
 	else
 	{
 		cout << "Available commands (shortcuts):\n";
 		cout << "\tplay\t(p)\n\tstart\t(s)\n\tstop\t(st)\n\tpause\t(ps)\n";
-		cout << "\tnext\t(n)\n\tjump\t(j)\n\tshowpl\t(sp)\n\trand\t(r)\n\tfilter\t(fl)\n\tquit\t(q)\n\thelp\t(h)\n";
+		cout << "\tnext\t(n)\n\tjump\t(j)\n\tshowpl\t(sp)\n\trand\t(r)\n";
+		cout << "\tfilter\t(fl)\n\tvol\t(v)\n\tquit\t(q)\n\thelp\t(h)\n";
 		cout << "Type 'help <command>' for specific help\n";
 	}
 
