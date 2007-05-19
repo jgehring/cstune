@@ -30,7 +30,7 @@ enum error_codes
 class player
 {
 	public:
-		player();
+		player(char *startdir = NULL);
 		~player();
 
 		bool			initialized();

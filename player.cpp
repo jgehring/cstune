@@ -21,7 +21,7 @@ using namespace std;
 
 
 // Constructor
-player::player()
+player::player(char *startdir)
 {
 	playing_st = open_st = init_st = random_st = false;
 	current_track = 0;
@@ -32,6 +32,12 @@ player::player()
 	xine_queue = NULL;
 
 	init_xine();
+
+	if (startdir)
+	{
+		cout << "Playing" << startdir;
+		play(startdir);
+	}
 }
 
 

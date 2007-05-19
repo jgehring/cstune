@@ -2,7 +2,7 @@
 
 
 TARGET			=	csTune
-CXX_FLAGS		=	-Wall -O2 -Wno-deprecated
+CXX_FLAGS		=	-Wall -O2 -Wno-deprecated -g
 INCLUDE_PATH		=	-I.
 INCLUDE_PATH_OSX	=	$(INCLUDE_PATH) -I/sw/include
 FLAGS_OSX		=	`/sw/bin/xine-config --cflags` `/sw/bin/xine-config --libs`
