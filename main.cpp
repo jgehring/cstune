@@ -4,7 +4,7 @@
  *
  *
  *	Arguments:
- *	 -p <dir> 	-	startup with all files from dir in playlist
+ *	<dir> 	-	startup with all files from dir in playlist
  */
 
 #include <iostream>
@@ -22,14 +22,11 @@ int main(int argc, char **argv)
 {
 	char *startdir = NULL;
 	
-	for (int i = 1; i < argc; i++)
+	if (argc > 1)
 	{
-		if (!strncmp("-p", argv[i], 2) && argc >= ++i)
-		{
-			startdir = argv[i];
-		}
+		startdir = argv[1];
 	}
-	
+
 	player *p = new player(startdir);
 	interface *i = new interface(p);
 

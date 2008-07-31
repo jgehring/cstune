@@ -35,7 +35,7 @@ player::player(char *startdir)
 
 	if (startdir)
 	{
-		cout << "Playing" << startdir;
+		cout << "Reading " << startdir << "..." << endl;
 		play(startdir);
 	}
 }
@@ -219,8 +219,9 @@ void player::show_playlist()
 	}
 
 	// Write current playlist to temporary file
+	// TODO: Use a real temporary file here!
 	ofstream out;
-	char temp[2048];
+	char temp[1024];
 	sprintf(temp, "%s%s", xine_get_homedir(), "/.cst_playlist");
 	
 	out.open(temp);
@@ -238,8 +239,8 @@ void player::show_playlist()
 	}
 
 	out.close();
-	char cmd[2048+5];
-	strcpy(cmd, "less ");
+	char cmd[2048];
+	sprintf(cmd, "less +%i ", current_track+1);
 	strcat(cmd, temp);
 	system(cmd);
 	unlink(temp);
