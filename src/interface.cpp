@@ -193,6 +193,15 @@ void interface::interpret_exec(char *cmd)
 		}
 		cout << "Volume set to " << p->get_volume() << "%" << endl;
 	}
+	else if (!strcmp(cmd, "oink"))
+	{
+		cout << "   _//|.-~~~~-," << endl;
+		cout << " _/oo  \\       \\_@" << endl;
+		cout << "(\")_   /   /   |" << endl;
+		cout << "  '--'|| |-\\  /" << endl;
+		cout << "      //_/ /_/" << endl << endl;
+		cout << "Credits go out to http://www.geocities.com/SoHo/7373/farm.htm" << endl;
+	}
 	else if (!check_cmd(cmd, "quit", "q") && strlen(cmd))
 	{
 		cout << "Unkown command '" << cmd << "'. Enter 'help' for a list of available commands" << endl;
