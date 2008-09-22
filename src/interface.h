@@ -1,5 +1,5 @@
 /*
- * 	csTune - A simple command line audio player
+ * 	cstune - A simple command line audio player
  * 	CopyLeft 2007 by Jonas Gehring
  */
 
@@ -8,7 +8,7 @@
 #define _INTERFACE_H
 
 
-#include "csTune.h"
+#include "cstune.h"
 #include "player.h"
 
 

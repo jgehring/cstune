@@ -1,5 +1,5 @@
 /*
- * 	csTune - A simple command line audio player
+ * 	cstune - A simple command line audio player
  * 	CopyLeft 2007 by Jonas Gehring
  */
 
@@ -223,7 +223,7 @@ void interface::print_help(char *topic)
 		cout << "\tJumps n tracks forward/backward\n\n";
 		cout << "If the 'num' argument is not given, it will be interpreted as\n";
 		cout << "'1' (i.e. the next song in the playlist will be played)\n";
-		cout << "If 'num' is < 0, csTune will jump backwards, i.e. '-1' for the\n";
+		cout << "If 'num' is < 0, cstune will jump backwards, i.e. '-1' for the\n";
 		cout << "previous track\n";
 	}
 	else if (check_cmd(topic, "showpl", "sp"))
@@ -238,7 +238,7 @@ void interface::print_help(char *topic)
 	{
 		cout << "\tjump <regexp>\n";
 		cout << "\tJumps to track that matches a given regular expression\n\n";
-		cout << "csTune starts searching at the current track and searches the playlist\n";
+		cout << "cstune starts searching at the current track and searches the playlist\n";
 		cout << "for the given regular expression. If the search has been successfull,\n";
 		cout << "it starts playing the first track it has found.\n";
 	}
