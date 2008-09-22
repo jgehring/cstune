@@ -38,5 +38,12 @@ AC_FUNC_CLOSEDIR_VOID
 AC_FUNC_STAT
 AC_CHECK_FUNCS([regcomp strchr])
 
+# Other features
+AC_ARG_ENABLE([colors], [  --enable-colors         enable colourful output],
+	      [if test "${enableval}" = "yes"; then
+	         AC_DEFINE([HAVE_COLORS], 1, 
+			   [Define if colourful output is wanted])
+	       fi])
+
 AC_CONFIG_FILES([Makefile src/Makefile])
 AC_OUTPUT

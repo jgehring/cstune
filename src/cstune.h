@@ -18,9 +18,15 @@
 
 
 // Macros for outputting colored text
-#define XTERM_GREEN	printf("\033[0;32m");
-#define XTERM_WHITE	printf("\033[0;37m");
-#define XTERM_RED	printf("\033[0;31m");
+#ifdef HAVE_COLORS
+ #define XTERM_GREEN	printf("\033[0;32m");
+ #define XTERM_WHITE	printf("\033[0;37m");
+ #define XTERM_RED	printf("\033[0;31m");
+#else
+ #define XTERM_GREEN
+ #define XTERM_WHITE
+ #define XTERM_RED
+#endif
 
 
 #endif
