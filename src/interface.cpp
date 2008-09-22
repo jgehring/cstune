@@ -199,7 +199,7 @@ void interface::interpret_exec(char *cmd)
 		cout << " _/oo  \\       \\_@" << endl;
 		cout << "(\")_   /   /   |" << endl;
 		cout << "  '--'|| |-\\  /" << endl;
-		cout << "      //_/ /_/" << endl << endl;
+		cout << "jgs   //_/ /_/" << endl << endl;
 		cout << "Credits go out to http://www.geocities.com/SoHo/7373/farm.htm" << endl;
 	}
 	else if (!check_cmd(cmd, "quit", "q") && strlen(cmd))
