@@ -14,6 +14,7 @@
 
 #include <regex.h>
 
+#include "cstune.h"
 #include "player.h"
 
 

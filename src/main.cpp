@@ -4,12 +4,15 @@
  *
  *
  *	Arguments:
+ *	--version
+ *	--help [-h]
  *	<dir> 	-	startup with all files from dir in playlist
  */
 
 #include <iostream>
 #include <string>
 
+#include "cstune.h"
 #include "player.h"
 #include "interface.h"
 
@@ -24,6 +27,20 @@ int main(int argc, char **argv)
 	
 	if (argc > 1)
 	{
+		if (!strcmp(argv[1], "--version"))
+		{
+			cout << PACKAGE_NAME << " " << PACKAGE_VERSION << endl;
+			return EXIT_SUCCESS;
+		}
+		else if (!strcmp(argv[1], "--help") || !strcmp(argv[1], "-h"))
+		{
+			cout << PACKAGE_NAME << " " << PACKAGE_VERSION << endl;
+			cout << "CopyLeft 2008 by Jonas Gehring <" << PACKAGE_BUGREPORT
+				<< ">" << endl << endl;
+			cout << "For in-program help, start the program and run 'help'" << endl;
+			return EXIT_SUCCESS;
+		}
+
 		startdir = argv[1];
 	}
 
@@ -35,5 +52,3 @@ int main(int argc, char **argv)
 	delete i;
 	delete p;
 }
-
-

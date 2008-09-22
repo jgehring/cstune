@@ -10,6 +10,12 @@
 
 #include <stdio.h>
 
+#ifdef HAVE_CONFIG_H
+ #include "config.h"
+#else
+ #error "No config.h"
+#endif
+
 
 // Macros for outputting colored text
 #define XTERM_GREEN	printf("\033[0;32m");

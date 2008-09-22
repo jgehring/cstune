@@ -10,7 +10,9 @@
 
 #include <readline/readline.h>
 
+#include "cstune.h"
 #include "interface.h"
+#include "player.h"
 
 
 using namespace std;
@@ -38,11 +40,10 @@ interface::~interface()
 void interface::loop()
 {
 	XTERM_WHITE;
-	char *cmd = new char[CMD_SIZE + 1];
 
+	char *cmd;
 	do
 	{
-		cmd[0] = 0x00;
 		char *c = readline("> ");
 		
 		if (!(c) && !(*c))
@@ -51,13 +52,16 @@ void interface::loop()
 			continue;
 		}
 
-		strcpy(cmd, c);
+		cmd = strdup(c);
+		if (!strcmp(cmd, "q") || !strcmp(cmd, "quit"))
+		{
+			break;
+		}
 
 		interpret_exec(cmd);
+		free(cmd);
 	}
-	while (strcmp(cmd, "q") && strcmp(cmd, "quit"));
-
-	delete cmd;
+	while (true);
 }
 
 

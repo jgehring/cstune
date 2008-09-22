@@ -14,7 +14,6 @@
 #include <xine.h>
 #include <xine/xineutils.h>
 
-#include "cstune.h"
 #include "interface.h"
 
 

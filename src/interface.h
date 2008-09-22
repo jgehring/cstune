@@ -8,10 +8,6 @@
 #define _INTERFACE_H
 
 
-#include "cstune.h"
-#include "player.h"
-
-
 #define CMD_SIZE 2048
 
 
