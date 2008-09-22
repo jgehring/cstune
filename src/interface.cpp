@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include <readline/readline.h>
+#include <readline/history.h>
 
 #include "cstune.h"
 #include "interface.h"
@@ -18,14 +19,11 @@
 using namespace std;
 
 
-static int user_cmd;
-
-
 // Constructor
 interface::interface(player *p)
 	:	p(p)
 {
-
+	using_history();
 }
 
 
@@ -59,6 +57,7 @@ void interface::loop()
 		}
 
 		interpret_exec(cmd);
+		add_history(cmd);
 		free(cmd);
 	}
 	while (true);
@@ -281,5 +280,3 @@ void interface::print_help(char *topic)
 
 	cout << endl;
 }
-
-

@@ -454,4 +454,3 @@ void player::xine_event_listener(void *user_data, const xine_event_t *event)
 			break;
 	}
 }
-

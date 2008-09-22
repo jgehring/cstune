@@ -8,9 +8,6 @@
 #define _INTERFACE_H
 
 
-#define CMD_SIZE 2048
-
-
 class player;
 
 
@@ -33,4 +30,3 @@ class interface
 
 
 #endif
-
