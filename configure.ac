@@ -16,10 +16,10 @@ AC_PROG_CC
 
 # Checks for libraries.
 VL_LIB_READLINE()
-if test "$vl_c_lib_readline" = "no"; then
+if test "$vl_cv_lib_readline" = "no"; then
 	AC_MSG_ERROR([Error - Can't compile without readline])
 fi
-if test "$vl_c_lib_readline_history" = "no"; then
+if test "$vl_cv_lib_readline_history" = "no"; then
 	AC_MSG_ERROR([Error - Can't compile without readline])
 fi
 AM_PATH_XINE([1.1.0], ,AC_MSG_ERROR([Error - xine was not found]))
